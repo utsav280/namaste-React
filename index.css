@@ -230,3 +230,41 @@
 .res-container a:hover {
   color: inherit; /* Ensure color does not change on hover */
 }
+.user-card {
+  width: 300px; /* Set a fixed width */
+  padding: 20px; /* Add padding inside the card */
+  background-color: #e0f7fa; /* Light cyan background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 20px; /* Space around the card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.user-card:hover {
+  transform: scale(1.02); /* Slightly enlarge on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.user-card img {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px; /* Rounded corners for the image */
+  object-fit: cover; /* Ensure the image covers the area */
+  margin-bottom: 10px; /* Space below the image */
+  object-fit: cover; /* Ensure the image covers the area */
+  object-position: center; /* Center the image within the container */
+}
+
+.user-card h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.user-card p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+  text-align: center;
+}
