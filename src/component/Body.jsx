@@ -1,4 +1,4 @@
-import RestaurantCard from "./ResturantCard";
+import ResturantCard, { withPromotedLabel } from "./ResturantCard";
 import Shimmer from "./Shimmer";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [search, setSearch] = useState("");
+  const ResturantCardPromoted = withPromotedLabel(ResturantCard);
 
   useEffect(() => {
     fetchData();
@@ -38,51 +39,65 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
   if (onlineStatus === false) {
     return (
-      <h1>
-        Looks like You are offline, Please Check Your Internet Connection!!
+      <h1 className="text-center mt-4">
+        You are offline. Please check your internet connection.
       </h1>
     );
   }
 
-  return listOfResturants.length === 0 ? (
-    <Shimmer />
-  ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search for Resturants"
-          />
+  return (
+    <div className="bg-white">
+      <div className="p-4 bg-gradient-to-r from-orange-300 to-orange-500 min-h-screen mt-4">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search for Restaurants"
+              className="p-2 rounded-lg w-full max-w-md"
+            />
+            <button
+              className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+              onClick={() => {
+                const filteredResturant = listOfResturants.filter((res) =>
+                  res.info.name.toLowerCase().includes(search.toLowerCase())
+                );
+                setFilteredList(filteredResturant);
+              }}
+            >
+              Search
+            </button>
+          </div>
           <button
-            className="search-btn"
-            onClick={() => {
-              const filteredResturant = listOfResturants.filter((res) =>
-                res.info.name.toLowerCase().includes(search.toLowerCase())
-              );
-              setFilteredList(filteredResturant);
-            }}
+            className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+            onClick={filterTopRated}
           >
-            Search
+            Top Rated Restaurants
           </button>
         </div>
-        <button className="filter-btn" onClick={filterTopRated}>
-          Top Rated Resturants
-        </button>
-      </div>
-      <div className="res-container">
-        {filteredList.map((restaurant) => (
-          <Link
-            key={restaurant.info.id}
-            to={"/resturant/" + restaurant.info.id}
-          >
-            <RestaurantCard resData={restaurant.info} />
-          </Link>
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredList.length === 0 ? (
+            <Shimmer />
+          ) : (
+            filteredList.map((restaurant) => (
+              <Link
+                key={restaurant.info.id}
+                to={"/resturant/" + restaurant.info.id}
+              >
+                {restaurant.info.externalRatings.aggregatedRating.rating >
+                "4" ? (
+                  <ResturantCardPromoted resData={restaurant.info} />
+                ) : (
+                  <ResturantCard resData={restaurant.info} />
+                )}
+              </Link>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
 };
+
 export default Body;
