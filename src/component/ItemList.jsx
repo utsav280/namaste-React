@@ -1,7 +1,16 @@
 import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const ItemList = ({ items }) => {
   console.log(items);
+
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    // Dispatch the addItem action
+    dispatch(addItem(item));
+  };
   return (
     <div>
       {items.map((item) => (
@@ -18,7 +27,10 @@ const ItemList = ({ items }) => {
             />
             {/* Button Positioned Below the Image */}
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-2">
-              <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-1 px-6 rounded-md shadow-md transition duration-300 hover:scale-105 hover:shadow-lg focus:outline-none">
+              <button
+                className="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-1 px-6 rounded-md shadow-md transition duration-300 hover:scale-105 hover:shadow-lg focus:outline-none"
+                onClick={() => handleAddItem(item)}
+              >
                 Add +
               </button>
             </div>
@@ -30,7 +42,8 @@ const ItemList = ({ items }) => {
               {item.card.info.name}
             </h3>
             <p className="text-md text-gray-700 font-semibold">
-              ₹ {item.card.info.price / 100 || item.card.info.defaultPrice}
+              ₹{" "}
+              {item.card.info.price / 100 || item.card.info.defaultPrice / 100}
             </p>
             <p className="text-sm text-gray-700">
               {item.card.info.description}

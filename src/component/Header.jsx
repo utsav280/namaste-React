@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
 import { LOGO_URL } from "../utils/constants.js";
+import UserContext from "../utils/UserContext.js";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("LogIn");
   const onlineStatus = useOnlineStatus();
+  const { loggedInUser } = useContext(UserContext);
+
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
 
   return (
     <header className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-300 to-orange-500 text-white shadow-lg border-b-4 border-orange-600">
@@ -51,6 +57,14 @@ const Header = () => {
             </Link>
           </li>
           <li className="flex items-center">
+            <Link
+              to="/cart"
+              className="hover:text-gray-300 transition duration-300"
+            >
+              Cart ({cartItems.length})
+            </Link>
+          </li>
+          <li className="flex items-center">
             <button
               className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded transition duration-300"
               onClick={() => {
@@ -60,6 +74,7 @@ const Header = () => {
               {btnNameReact}
             </button>
           </li>
+          <li className="flex items-center">{loggedInUser}</li>
         </ul>
       </nav>
     </header>

@@ -1,8 +1,9 @@
 import ResturantCard, { withPromotedLabel } from "./ResturantCard";
 import Shimmer from "./Shimmer";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [listOfResturants, setListOfResturants] = useState([]);
@@ -45,6 +46,8 @@ const Body = () => {
     );
   }
 
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return (
     <div className="bg-white">
       <div className="p-4 bg-gradient-to-r from-orange-300 to-orange-500 min-h-screen mt-4">
@@ -68,6 +71,13 @@ const Body = () => {
             >
               Search
             </button>
+            <label>UserName: </label>
+            <input
+              className="border border-gray-300 rounded-lg p-2  max-w-md"
+              type="text"
+              value={loggedInUser}
+              onChange={(e) => setUserName(e.target.value)}
+            />
           </div>
           <button
             className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300"
