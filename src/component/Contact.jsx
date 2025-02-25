@@ -1,6 +1,9 @@
+import React from "react";
+
 const Contact = () => {
   return (
     <div className="bg-white w-full min-h-screen flex flex-col items-center">
+      <h1>Contact</h1>
       <div className="p-6 bg-gradient-to-r from-orange-300 to-orange-500 flex flex-col items-center justify-center w-full mt-4 flex-grow">
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center transform transition duration-300 hover:shadow-2xl hover:scale-105">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>

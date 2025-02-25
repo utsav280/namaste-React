@@ -4,6 +4,7 @@ import useOnlineStatus from "../utils/useOnlineStatus.js";
 import { LOGO_URL } from "../utils/constants.js";
 import UserContext from "../utils/UserContext.js";
 import { useSelector } from "react-redux";
+import React from "react";
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("LogIn");
